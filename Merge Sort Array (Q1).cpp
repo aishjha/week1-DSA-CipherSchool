@@ -1,42 +1,41 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-void merge(vector<int>& arr, int l, int mid, int h) {
-    vector<int> left(arr.begin() + l, arr.begin() + mid + 1);
-    vector<int> right(arr.begin() + mid + 1, arr.end());
+void mergeArrays(vector<int>& arr1, vector<int>& arr2) {
+    int m = arr1.size();
+    int n = arr2.size();
 
-    int i = 0, j = 0, k = l;
-    while(i < left.size() && j < right.size()) {
-        if(left[i] < right[j]) {
-            arr[k] = left[i];
-            i++;
+    arr1.resize(m + n);
+    int i = m - 1, j = n - 1, k = m + n - 1;
+
+    while( i >= 0 && j >= 0) {
+        if(arr1[i] > arr2[j]) {
+            arr1[k] = arr1[i];
+            i--;
         }
         else {
-            arr[k] = right[j];
-            j++;
+            arr1[k] = arr2[j];
+            j--;
         }
-        k++;
+
+        k--;
     }
 
-    while(i < left.size()) {
-        arr[k] = left[i];
-        k++;
-        i++;
-    }
-
-    while(j < right.size()) {
-        arr[k] = right[j];
-        k++;
-        j++;
+    while(j >= 0) {
+        arr1[k] = arr2[j];
+        k--;
+        j--;
     }
 }
 
-void mergeSort(vector<int>& arr, int l, int h) {
-    if(l >= h)
-        return;
+int main() {
+    vector<int> arr1 = {5, 6, 8};
+    vector<int> arr2 = {1, 2, 4};
 
-    int mid = (l + h) / 2;
-    mergeSort(arr, l, mid);
-    mergeSort(arr, mid + 1, h);
-    merge(arr, l, mid, h);
+    mergeArrays(arr1, arr2);
+
+    for(auto x: arr1)
+        cout<<x<<" ";
+    
+    return 0;
 }
